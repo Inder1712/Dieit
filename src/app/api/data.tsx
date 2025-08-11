@@ -35,7 +35,7 @@ export const courseData: {
   rating: number;
 }[] = [
     {
-      heading: 'O Level',
+      heading: 'O Level Course by Niliet',
       name: "NILET",
       imgSrc: '/images/courses/courseone.png',
       students: 150,

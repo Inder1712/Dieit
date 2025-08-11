@@ -83,7 +83,7 @@ const Signin = () => {
           <button
             onClick={loginUser}
             type="submit"
-            className="bg-primary w-full py-3 rounded-lg text-18 font-medium border border-primary hover:text-primary hover:bg-transparent"
+            className="bg-primary w-full py-3 rounded-lg text-18 font-medium border border-primary hover:text-primary hover:bg-transparent text-white"
           >
             Sign In {loading && <Loader />}
           </button>
@@ -92,11 +92,11 @@ const Signin = () => {
 
       <Link
         href="/forgot-password"
-        className="mb-2 inline-block text-base text-dark hover:text-primary text-white dark:hover:text-primary"
+        className="mb-2 inline-block text-base text-primary hover:text-primary  dark:hover:text-primary"
       >
         Forgot Password?
       </Link>
-      <p className="text-body-secondary text-white text-base">
+      <p className="text-body-secondary text-primary text-base">
         Not a member yet?{" "}
         <Link href="/" className="text-primary hover:underline">
           Sign Up

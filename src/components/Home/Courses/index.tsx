@@ -71,8 +71,7 @@ const Courses = () => {
                                     <img
                                         src={items.imgSrc}
                                         alt="course-image"
-                                        width={389}
-                                        height={262}
+                                     
                                         className="m-auto h-[262px] w-full object-cover rounded-3xl"
                                     />
 

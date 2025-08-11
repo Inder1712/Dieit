@@ -52,7 +52,7 @@ const Mentor = () => {
                                     <img
                                         src={items.imgSrc}
                                         alt={"mentyt"}
-                                        className="inline-block m-auto  h-[150px] w-[150px]"
+                                        className="inline-block m-auto  h-[150px] w-[150px] rounded-full"
                                     />
                                     
                                     {/* <div className="absolute right-[84px] bottom-[102px] bg-white rounded-full p-4"> */}

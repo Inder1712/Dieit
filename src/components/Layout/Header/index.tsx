@@ -183,7 +183,7 @@ const Header: React.FC = () => {
         <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
           <div
             ref={signUpRef}
-            className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg bg-white px-8 pt-14 pb-8 text-center"
+            className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg bg-white px-9 pt-28 pb-8 text-center"
           >
             <button
               onClick={() => setIsSignUpOpen(false)}

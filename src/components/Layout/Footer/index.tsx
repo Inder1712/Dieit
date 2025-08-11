@@ -31,7 +31,7 @@ const footer = () => {
             <div className="ml-4 font-[6px] underline text">
               DIEIT</div>
             <div className="ml-4   text-[11px] ">
-              (Dream Institute of Education <br /> and Information Technology)</div>        </div>
+              (DreamInstitute of Education <br /> and Information Technology)</div>        </div>
           <div className="col-span-2">
             <h3 className="mb-4 text-2xl font-medium">Links</h3>
             <ul>

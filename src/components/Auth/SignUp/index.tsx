@@ -1,39 +1,46 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import SocialSignUp from "../SocialSignUp";
-import Logo from "@/components/Layout/Header/Logo";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import SocialSignIn from "../SocialSignIn";
+import Logo from "@/components/Layout/Header/Logo"
 import Loader from "@/components/Common/Loader";
-const SignUp = () => {
+
+const Signin = () => {
   const router = useRouter();
+
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+    checkboxToggle: false,
+  });
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: any) => {
+  const loginUser = (e: any) => {
     e.preventDefault();
 
     setLoading(true);
-    const data = new FormData(e.currentTarget);
-    const value = Object.fromEntries(data.entries());
-    const finalData = { ...value };
+    signIn("credentials", { ...loginData, redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error(callback?.error);
+          console.log(callback?.error);
+          setLoading(false);
+          return;
+        }
 
-    fetch("/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        toast.success("Successfully registered");
-        setLoading(false);
-        router.push("/signin");
+        if (callback?.ok && !callback?.error) {
+          toast.success("Login successful");
+          setLoading(false);
+          router.push("/");
+        }
       })
       .catch((err) => {
-        toast.error(err.message);
         setLoading(false);
+        console.log(err.message);
+        toast.error(err.message);
       });
   };
 
@@ -43,30 +50,22 @@ const SignUp = () => {
         <Logo />
       </div>
 
-      <SocialSignUp />
+      <SocialSignIn />
 
-      <span className="z-1 relative my-8 block text-center before:content-[''] before:absolute before:h-px before:w-40% before:bg-black/60 before:left-0 before:top-3 after:content-[''] after:absolute after:h-px after:w-40% after:bg-black/60 after:top-3 after:right-0">
-        <span className="relative z-10 inline-block px-3 text-base text-black">
+      <span className="z-1 relative my-8 block text-center before:content-[''] before:absolute before:h-px before:w-40% before:bg-black/15 before:left-0 before:top-3 after:content-[''] after:absolute after:h-px after:w-40% after:bg-black/15 after:top-3 after:right-0">
+        <span className="text-body-secondary relative z-10 inline-block px-3 text-base text-black">
           OR
         </span>
       </span>
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-[22px]">
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            required
-            className="w-full rounded-md border border-black/20 border-solid bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-grey focus:border-primary focus-visible:shadow-none text-white dark:focus:border-primary"
-          />
-        </div>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="mb-[22px]">
           <input
             type="email"
             placeholder="Email"
-            name="email"
-            required
+            onChange={(e) =>
+              setLoginData({ ...loginData, email: e.target.value })
+            }
             className="w-full rounded-md border border-black/20 border-solid bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-grey focus:border-primary focus-visible:shadow-none text-white dark:focus:border-primary"
           />
         </div>
@@ -74,40 +73,26 @@ const SignUp = () => {
           <input
             type="password"
             placeholder="Password"
-            name="password"
-            required
+            onChange={(e) =>
+              setLoginData({ ...loginData, password: e.target.value })
+            }
             className="w-full rounded-md border border-black/20 border-solid bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-grey focus:border-primary focus-visible:shadow-none text-white dark:focus:border-primary"
           />
         </div>
         <div className="mb-9">
           <button
+            onClick={loginUser}
             type="submit"
-            className="flex w-full items-center text-18 font-medium justify-center rounded-md bg-primary px-5 py-3 text-darkmode transition duration-300 ease-in-out hover:bg-transparent hover:text-primary border-primary border "
+            className="bg-primary w-full py-3 rounded-lg text-18 font-medium border border-primary hover:text-primary hover:bg-transparent text-white"
           >
             Sign Up {loading && <Loader />}
           </button>
         </div>
       </form>
 
-      <p className="text-body-secondary mb-4 text-white text-base">
-        By creating an account you are agree with our{" "}
-        <a href="/#" className="text-primary hover:underline">
-          Privacy
-        </a>{" "}
-        and{" "}
-        <a href="/#" className="text-primary hover:underline">
-          Policy
-        </a>
-      </p>
-
-      <p className="text-body-secondary text-white text-base">
-        Already have an account?
-        <Link href="/" className="pl-2 text-primary hover:underline">
-          Sign In
-        </Link>
-      </p>
+      
     </>
   );
 };
 
-export default SignUp;
+export default Signin;

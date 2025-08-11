@@ -1,7 +1,4 @@
 import Image from 'next/image';
-import { getImagePrefix } from '@/utils/util';
-
-
 const Hero = () => {
     return (
         <section id="home-section" className='bg-slateGray'>
@@ -28,15 +25,15 @@ const Hero = () => {
 
                         <div className='flex items-center justify-between pt-6'>
                             <div className='flex gap-2'>
-                                <Image src={`${getImagePrefix()}images/banner/check-circle.svg`} alt="check" width={30} height={30} />
+                                <img src={`images/banner/check-circle.svg`} alt="check" width={30} height={30} />
                                 <p className='text-sm sm:text-lg text-black'>Flexible</p>
                             </div>
                             <div className='flex gap-2'>
-                                <Image src={`${getImagePrefix()}images/banner/check-circle.svg`} alt="check" width={30} height={30} />
+                                <img src={`images/banner/check-circle.svg`} alt="check" width={30} height={30} />
                                 <p className='text-sm sm:text-lg text-black'>Learning path</p>
                             </div>
                             <div className='flex gap-2'>
-                                <Image src={`${getImagePrefix()}images/banner/check-circle.svg`} alt="check" width={30} height={30} />
+                                <img src={`images/banner/check-circle.svg`} alt="check" width={30} height={30} />
                                 <p className='text-sm sm:text-lg text-black'>Community</p>
                             </div>
                         </div>

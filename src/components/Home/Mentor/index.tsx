@@ -49,14 +49,14 @@ const Mentor = () => {
                         <div key={i}>
                             <div className='m-3 py-14 md:my-10 text-center'>
                                 <div className="relative">
-                                     <img
-              src={items.imgSrc}
-              alt={"mentyt"}
-              className="w-full h-48 object-cover"
-            />
-                                    <Image src={`${getImagePrefix()}${items.imgSrc}`} alt="user-image" width={306} height={0} className="inline-block m-auto  h-[150px] w-[150px]"  />
+                                    <img
+                                        src={items.imgSrc}
+                                        alt={"mentyt"}
+                                        className="inline-block m-auto  h-[150px] w-[150px]"
+                                    />
+                                    
                                     {/* <div className="absolute right-[84px] bottom-[102px] bg-white rounded-full p-4"> */}
-                                        {/* <Image src={`${getImagePrefix()}images/mentor/linkedin.svg`}alt="linkedin-image" width={25} height={24} />
+                                    {/* <Image src={`${getImagePrefix()}images/mentor/linkedin.svg`}alt="linkedin-image" width={25} height={24} />
                                     </div> */}
                                 </div>
                                 <div className="mt-10">

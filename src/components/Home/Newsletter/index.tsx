@@ -19,8 +19,8 @@ const Newsletter = () => {
       <div className="flex flex-col sm:flex-row items-center justify-center py-8 sm:py-16 gap-6 sm:gap-12">
         {institutes.map((institute, index) => (
           <div key={index} className="flex flex-col items-center text-white">
-            <Image
-              src={`${getImagePrefix()}${institute.img}`}
+            <img
+              src={institute.img}
               alt={institute.name}
               width={300}
               height={300}

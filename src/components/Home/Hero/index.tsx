@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getImagePrefix } from '@/utils/util';
 
+
 const Hero = () => {
     return (
         <section id="home-section" className='bg-slateGray'>
@@ -9,12 +10,11 @@ const Hero = () => {
                     
                     {/* Image first on mobile (order-1), second on desktop (lg:order-2) */}
                     <div className='col-span-6 flex justify-center order-1 lg:order-2'>
-                        <img
-                            src={`${getImagePrefix()}images/banner/mahila.png`}
-                            alt="nothing"
-                            width={1000}
-                            height={805}
-                        />
+                       <img
+                                        src="/images/banner/mahila.png"
+                                        alt={"mentyt"}
+                                        className="inline-block m-auto  h-full"
+                                    />
                     </div>
 
                     {/* Text second on mobile (order-2), first on desktop (lg:order-1) */}

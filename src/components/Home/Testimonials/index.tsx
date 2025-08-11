@@ -72,7 +72,7 @@ const Testimonial = () => {
                         <div key={i}>
                             <div className={`bg-white rounded-2xl m-4 p-5 my-20 relative ${i % 2 ? 'shadow-testimonial-shadow2' : 'shadow-testimonial-shadow1'}`}>
                                 <div className="absolute top-[-45px]">
-                                    <Image src={`${getImagePrefix()}${items.imgSrc}`}
+                                    <img src={items.imgSrc}
                                         alt={items.name} width={100} height={100} className="inline-block rounded-full h-[100px] w-[100px] " />
                                 </div>
                                 <h4 className='text-base font-normal text-darkgray my-4 mt-10'>{items.comment}</h4>

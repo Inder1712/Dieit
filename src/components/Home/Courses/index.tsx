@@ -68,8 +68,8 @@ const Courses = () => {
                         <div key={i}>
                             <div className='bg-white m-3 mb-12 px-3 pt-3 pb-12 shadow-course-shadow rounded-2xl h-full'>
                                 <div className="relative rounded-3xl">
-                                    <Image
-                                        src={`${getImagePrefix()}${items.imgSrc}`}
+                                    <img
+                                        src={items.imgSrc}
                                         alt="course-image"
                                         width={389}
                                         height={262}

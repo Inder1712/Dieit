@@ -6,8 +6,6 @@ import { headerData } from "../Header/Navigation/menuData";
 import Logo from "./Logo";
 import HeaderLink from "../Header/Navigation/HeaderLink";
 import MobileHeaderLink from "../Header/Navigation/MobileHeaderLink";
-import Signin from "@/components/Auth/SignIn";
-import SignUp from "@/components/Auth/SignUp";
 import { useTheme } from "next-themes";
 
 const Header: React.FC = () => {
@@ -16,24 +14,14 @@ const Header: React.FC = () => {
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
-  const signInRef = useRef<HTMLDivElement>(null);
-  const signUpRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // Sticky header effect
   const handleScroll = () => setSticky(window.scrollY >= 80);
 
-  // Close modals and menus on outside click
+  // Close menus on outside click
   const handleClickOutside = (event: MouseEvent) => {
-    if (signInRef.current && !signInRef.current.contains(event.target as Node)) {
-      setIsSignInOpen(false);
-    }
-    if (signUpRef.current && !signUpRef.current.contains(event.target as Node)) {
-      setIsSignUpOpen(false);
-    }
     if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node) && navbarOpen) {
       setNavbarOpen(false);
     }
@@ -46,16 +34,16 @@ const Header: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [navbarOpen, isSignInOpen, isSignUpOpen]);
+  }, [navbarOpen]);
 
-  // Prevent scrolling when modals or menu are open
+  // Prevent scrolling when mobile menu is open
   useEffect(() => {
-    if (isSignInOpen || isSignUpOpen || navbarOpen) {
+    if (navbarOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-  }, [isSignInOpen, isSignUpOpen, navbarOpen]);
+  }, [navbarOpen]);
 
   return (
     <header
@@ -66,7 +54,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md flex items-center justify-between px-4 relative">
         <Logo />
 
-        {/* Mobile Centered Hello */}
+        {/* Mobile Centered Title */}
         <div className="lg:hidden absolute left-1/2 transform -translate-x-1/2 text-black font-bold text-center">
           <div>DIEIT</div>
           <div className="text-[10px] font-normal">
@@ -84,13 +72,13 @@ const Header: React.FC = () => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center gap-4">
           <button
-            onClick={() => setIsSignInOpen(true)}
+            onClick={() => window.open("https://www.google.com", "_blank")}
             className="bg-primary text-white hover:bg-primary/15 hover:text-primary px-6 py-3 rounded-full text-lg font-medium"
           >
             Sign In
           </button>
           <button
-            onClick={() => setIsSignUpOpen(true)}
+            onClick={() => window.open("https://www.google.com", "_blank")}
             className="bg-primary/15 hover:bg-primary text-primary hover:text-white px-6 py-3 rounded-full text-lg font-medium"
           >
             Sign Up
@@ -139,7 +127,7 @@ const Header: React.FC = () => {
           <div className="mt-4 flex flex-col space-y-4 w-full">
             <button
               onClick={() => {
-                setIsSignInOpen(true);
+                window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank");
                 setNavbarOpen(false);
               }}
               className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white"
@@ -148,7 +136,7 @@ const Header: React.FC = () => {
             </button>
             <button
               onClick={() => {
-                setIsSignUpOpen(true);
+                window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank");
                 setNavbarOpen(false);
               }}
               className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700"
@@ -158,44 +146,6 @@ const Header: React.FC = () => {
           </div>
         </nav>
       </div>
-
-      {/* Sign In Modal */}
-      {isSignInOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
-          <div
-            ref={signInRef}
-            className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg px-8 pt-14 pb-8 text-center bg-white"
-          >
-            <button
-              onClick={() => setIsSignInOpen(false)}
-              className="absolute top-0 right-0 mr-8 mt-8"
-              aria-label="Close Sign In Modal"
-            >
-              ✕
-            </button>
-            <Signin />
-          </div>
-        </div>
-      )}
-
-      {/* Sign Up Modal */}
-      {isSignUpOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
-          <div
-            ref={signUpRef}
-            className="relative mx-auto w-full max-w-md overflow-hidden rounded-lg bg-white px-9 pt-28 pb-8 text-center"
-          >
-            <button
-              onClick={() => setIsSignUpOpen(false)}
-              className="absolute top-0 right-0 mr-8 mt-8"
-              aria-label="Close Sign Up Modal"
-            >
-              ✕
-            </button>
-            <SignUp />
-          </div>
-        </div>
-      )}
     </header>
   );
 };

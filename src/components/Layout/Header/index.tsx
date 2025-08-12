@@ -72,13 +72,13 @@ const Header: React.FC = () => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center gap-4">
           <button
-            onClick={() => window.open("https://www.google.com", "_blank")}
+            onClick={() => window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank")}
             className="bg-primary text-white hover:bg-primary/15 hover:text-primary px-6 py-3 rounded-full text-lg font-medium"
           >
             Sign In
           </button>
           <button
-            onClick={() => window.open("https://www.google.com", "_blank")}
+            onClick={() => window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank")}
             className="bg-primary/15 hover:bg-primary text-primary hover:text-white px-6 py-3 rounded-full text-lg font-medium"
           >
             Sign Up

@@ -72,17 +72,12 @@ const Header: React.FC = () => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center gap-4">
           <button
-            onClick={() => window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank")}
+            onClick={() => window.open("http://admin.dieit.in", "_blank")}
             className="bg-primary text-white hover:bg-primary/15 hover:text-primary px-6 py-3 rounded-full text-lg font-medium"
           >
-            Sign In
+            Admin Login
           </button>
-          <button
-            onClick={() => window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank")}
-            className="bg-primary/15 hover:bg-primary text-primary hover:text-white px-6 py-3 rounded-full text-lg font-medium"
-          >
-            Sign Up
-          </button>
+
         </div>
 
         {/* Mobile Menu Button */}
@@ -127,22 +122,14 @@ const Header: React.FC = () => {
           <div className="mt-4 flex flex-col space-y-4 w-full">
             <button
               onClick={() => {
-                window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank");
+                window.open("http://admin.dieit.in", "_blank");
                 setNavbarOpen(false);
               }}
               className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white"
             >
-              Sign In
+              Admin Login
             </button>
-            <button
-              onClick={() => {
-                window.open("https://warm-tartufo-cc7102.netlify.app/", "_blank");
-                setNavbarOpen(false);
-              }}
-              className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Sign Up
-            </button>
+            
           </div>
         </nav>
       </div>

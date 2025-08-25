@@ -10,6 +10,7 @@ section {
   @apply py-20;
 }
 
+/* Slick carousel dots */
 .slick-dots {
   color: #1A21BC;
 }
@@ -21,4 +22,22 @@ section {
 
 .slick-dots li button:before {
   font-size: 11px !important;
+}
+
+/* ===========================
+   🔔 Notice Board Animation
+   =========================== */
+@keyframes notice {
+  0% { opacity: 0; transform: translateY(10px); }
+  5% { opacity: 1; transform: translateY(0); }
+  45% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 0; }
+}
+
+.animate-notice {
+  animation-name: notice;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
 }

@@ -9,12 +9,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      boxShadow: {
-        'input-shadow': '0 63px 59px rgba(26,33,188,.1)',
-        'course-shadow': '0 40px 20px rgba(0,0,0,.15)',
-        'testimonial-shadow1': '0 5.54348px 11.087px rgba(89,104,118,.05)',
-        'testimonial-shadow2': '5.54348px 38.8043px 110.87px rgba(89,104,118,.15)',
-      },
       colors: {
         primary: "#6556ff",
         secondary: "#1a21bc",
@@ -24,15 +18,23 @@ const config: Config = {
         success: "#43c639",
         midnight_text: "#222c44",
       },
-      spacing: {
-        '75%': '75%',
+
+      /* ---- Animation: scroll from bottom to top ---- */
+      keyframes: {
+        noticeCycle: {
+          "0%": { opacity: "1", transform: "translateY(100%)" },   // off-screen bottom
+          "5%": { opacity: "1", transform: "translateY(0)" },      // slide in
+          "20%": { opacity: "1", transform: "translateY(0)" },     // stay
+          "25%": { opacity: "1", transform: "translateY(-100%)" }, // slide out top
+          "100%": { opacity: "1", transform: "translateY(-100%)" },
+        },
       },
-      backgroundImage: {
-        'newsletter-bg': `url('/images/newsletter/bgFile.png')`,
-        'newsletter-bg-2': `url('/E-learning/images/newsletter/bgFile.png')`,
+      animation: {
+        notice: "noticeCycle linear infinite",
       },
     },
   },
   plugins: [],
 };
+
 export default config;

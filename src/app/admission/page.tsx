@@ -15,14 +15,29 @@ export default function AdmissionsPage() {
     qualification: "",
     course: "",
     message: "",
+    image: "", // ✅ new field for image
   });
 
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value ?? "" });
+  };
+
+  // ✅ convert image to base64 string
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm({ ...form, image: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,18 +45,18 @@ export default function AdmissionsPage() {
     setLoading(true);
 
     try {
-      // Make sure we never pass undefined to Firestore
       const payload = {
         name: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
-        dob: form.dob || "",          // string ok
+        dob: form.dob || "",
         gender: form.gender || "",
         address: form.address || "",
         qualification: form.qualification.trim(),
         course: form.course || "",
         message: form.message || "",
-        createdAt: serverTimestamp(), // ✅ safer than client clock
+        image: form.image || "", // ✅ store image as base64 string
+        createdAt: serverTimestamp(),
       };
 
       await addDoc(collection(db, "Admissions"), payload);
@@ -57,12 +72,11 @@ export default function AdmissionsPage() {
         qualification: "",
         course: "",
         message: "",
+        image: "",
       });
     } catch (err: any) {
       console.error("🔥 Firestore addDoc error:", err);
-      const msg =
-        (err && (err.message || err.code)) || "Unknown error";
-      alert(`❌ Failed to submit. ${msg}`);
+      alert(`❌ Failed to submit. ${err.message || err.code}`);
     } finally {
       setLoading(false);
     }
@@ -86,14 +100,19 @@ export default function AdmissionsPage() {
       <section className="bg-blue-50 py-12 px-6">
         <h2 className="text-2xl font-bold text-center mb-8">Admission Process</h2>
         <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
-          {["Fill the Application Form", "Submit Required Documents", "Pay Fees & Start Classes"].map(
-            (step, idx) => (
-              <div key={idx} className="bg-white rounded-xl shadow p-6 text-center border border-gray-200">
-                <div className="text-3xl font-bold text-blue-600 mb-2">{idx + 1}</div>
-                <p className="text-gray-700">{step}</p>
-              </div>
-            )
-          )}
+          {[
+            "Fill the Application Form",
+            "Submit Required Documents",
+            "Pay Fees & Start Classes",
+          ].map((step, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-xl shadow p-6 text-center border border-gray-200"
+            >
+              <div className="text-3xl font-bold text-blue-600 mb-2">{idx + 1}</div>
+              <p className="text-gray-700">{step}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -126,6 +145,16 @@ export default function AdmissionsPage() {
             <option value="JavaScript">JavaScript</option>
           </select>
           <textarea name="message" placeholder="Your Message" value={form.message} onChange={handleChange} rows={4} className="w-full border border-gray-300 rounded-lg p-3" />
+
+          {/* ✅ Image Upload */}
+          <div>
+            <label className="block mb-2 font-medium">Upload Your Photo</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full border border-gray-300 rounded-lg p-3" />
+            {form.image && (
+              <img src={form.image} alt="Preview" className="mt-4 w-32 h-32 object-cover rounded-lg border" />
+            )}
+          </div>
+
           <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50">
             {loading ? "Submitting..." : "Submit Application"}
           </button>

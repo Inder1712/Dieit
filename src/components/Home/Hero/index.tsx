@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, onSnapshot, orderBy, query, Timestamp } from "firebase/firestore";
 
@@ -9,10 +9,11 @@ type NoticeDoc = {
   heading?: string;
   description?: string;
   link?: string;
+  image?: string;
   createdAt?: Timestamp;
 };
 
-const NoticeCard = ({ heading = "", description = "", link, createdAt }: NoticeDoc) => {
+const NoticeCard = ({ heading = "", description = "", link, image, createdAt }: NoticeDoc) => {
   const [expanded, setExpanded] = useState(false);
   const limit = 200;
 
@@ -23,13 +24,33 @@ const NoticeCard = ({ heading = "", description = "", link, createdAt }: NoticeD
   const formattedDate = createdAt ? createdAt.toDate().toLocaleString() : "";
 
   return (
-    <div className="w-full px-4 py-3 rounded-lg bg-slate-100 border border-slate-300 shadow 
-                    text-left text-sm sm:text-base font-medium text-slate-800 
-                    break-words leading-snug flex flex-col">
-      {heading && <h3 className="text-lg font-bold mb-1">{heading}</h3>}
+    <div className="w-full h-full px-3 py-2 rounded-lg text-left text-sm sm:text-base font-medium text-slate-800 break-words leading-snug flex flex-col overflow-hidden">
+      {/* Heading */}
+      {heading && (
+        <h3 className="text-lg font-bold mb-2 line-clamp-2 break-words">
+          {heading}
+        </h3>
+      )}
 
-      <span>{displayText || "No description available"}</span>
+      {/* Image */}
+      {/* Image */}
+{image && (
+  <div className="w-full max-h-32 mb-2 flex items-center justify-start">
+    <img
+      src={image}
+      alt={heading || "notice image"}
+      className="max-h-32 object-contain rounded"
+    />
+  </div>
+)}
 
+
+      {/* Description */}
+      <div className="text-sm text-slate-700 mb-2 overflow-y-auto max-h-32 pr-1 no-scrollbar">
+        {displayText || "No description available"}
+      </div>
+
+      {/* Read More */}
       {isLong && (
         <button
           onClick={() => setExpanded(!expanded)}
@@ -39,19 +60,21 @@ const NoticeCard = ({ heading = "", description = "", link, createdAt }: NoticeD
         </button>
       )}
 
+      {/* Link */}
       {link && link.trim() !== "" && (
         <a
           href={link.startsWith("http") ? link : `https://${link}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-red-600 font-semibold mt-2 break-all hover:underline"
+          className="text-red-600 font-semibold mt-2 break-all hover:underline max-h-10 overflow-y-auto no-scrollbar"
         >
           {link}
         </a>
       )}
 
+      {/* Date */}
       {formattedDate && (
-        <p className="text-[10px] text-slate-500 mt-1">{formattedDate}</p>
+        <p className="text-[10px] text-slate-500 mt-2">{formattedDate}</p>
       )}
     </div>
   );
@@ -60,6 +83,7 @@ const NoticeCard = ({ heading = "", description = "", link, createdAt }: NoticeD
 const Hero = () => {
   const [notices, setNotices] = useState<NoticeDoc[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const q = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
@@ -83,11 +107,15 @@ const Hero = () => {
     return () => unsub();
   }, []);
 
-  const PER_SLIDE = 3; // seconds per notice
-  const cycleSeconds = useMemo(() => {
-    const count = Math.max(1, notices.length);
-    return count * PER_SLIDE;
-  }, [notices.length]);
+  // ✅ Rotate notices automatically
+  useEffect(() => {
+    if (notices.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % notices.length);
+      }, 4000); // 4s per notice
+      return () => clearInterval(interval);
+    }
+  }, [notices]);
 
   return (
     <section id="home-section" className="bg-slateGray">
@@ -95,48 +123,28 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-6">
           {/* Notice Board */}
           <div className="col-span-6 flex justify-center order-1 lg:order-2">
-            <div className="relative w-full max-w-lg h-72 rounded-2xl shadow-xl bg-white border-2 border-slate-400 overflow-hidden flex flex-col">
-              <div className="bg-slate-800 text-white text-center py-2 font-bold text-lg tracking-wide border-b border-slate-500">
-                📌 Notice Board
-              </div>
+  <div className="relative w-full max-w-lg h-[380px] rounded-2xl shadow-xl bg-white border-2 border-slate-400 overflow-hidden flex flex-col">
+    <div className="bg-slate-800 text-white text-center py-2 font-bold text-lg tracking-wide border-b border-slate-500">
+      📌 Notice Board
+    </div>
 
-              <div className="flex-1 relative flex items-center justify-center px-2 sm:px-6 overflow-hidden">
-                {loading && (
-                  <div className="text-slate-500 text-sm">Loading notices…</div>
-                )}
+    <div className="flex-1 flex items-center justify-center px-2 sm:px-4 overflow-hidden">
+      {loading && <div className="text-slate-500 text-sm">Loading notices…</div>}
+      {!loading && notices.length === 0 && (
+        <div className="text-slate-500 text-sm">No notices yet.</div>
+      )}
 
-                {!loading && notices.length === 0 && (
-                  <div className="text-slate-500 text-sm">No notices yet.</div>
-                )}
-
-                {!loading &&
-                  notices.map((notice, i) => (
-                    <div
-                      key={notice.id ?? i}
-                      className={`absolute inset-0 flex items-center justify-center p-2 ${
-                        notices.length > 1 ? "animate-notice" : ""
-                      }`}
-                      style={
-                        notices.length > 1
-                          ? {
-                              animationDuration: `${cycleSeconds}s`,
-                              animationDelay: `${i * PER_SLIDE}s`,
-                              willChange: "opacity, transform",
-                            }
-                          : {}
-                      }
-                    >
-                      <NoticeCard
-                        heading={notice.heading}
-                        description={notice.description}
-                        link={notice.link}
-                        createdAt={notice.createdAt}
-                      />
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
+      {!loading && notices.length > 0 && (
+        <div
+          key={notices[currentIndex]?.id ?? currentIndex}
+          className="w-full h-full animate-fade"
+        >
+          <NoticeCard {...notices[currentIndex]} />
+        </div>
+      )}
+    </div>
+  </div>
+</div>
 
           {/* Text Section */}
           <div className="col-span-6 flex flex-col gap-8 order-2 lg:order-1">

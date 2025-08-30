@@ -14,7 +14,8 @@ export default function AdmissionsPage() {
     address: "",
     qualification: "",
     course: "",
-    institute: "", // ✅ New field
+    institute: "",
+    session: "", // ✅ New field
     message: "",
     photo: "",
     aadhar: "",
@@ -58,7 +59,8 @@ export default function AdmissionsPage() {
         address: form.address || "",
         qualification: form.qualification.trim(),
         course: form.course || "",
-        institute: form.institute || "", // ✅ included in Firestore
+        institute: form.institute || "",
+        session: form.session || "", // ✅ included in Firestore
         message: form.message || "",
         photo: form.photo || "",
         aadhar: form.aadhar || "",
@@ -79,6 +81,7 @@ export default function AdmissionsPage() {
         qualification: "",
         course: "",
         institute: "",
+        session: "",
         message: "",
         photo: "",
         aadhar: "",
@@ -206,6 +209,19 @@ export default function AdmissionsPage() {
             <option value="Institute A">Institute A</option>
             <option value="Institute B">Institute B</option>
             <option value="Institute C">Institute C</option>
+          </select>
+
+          {/* ✅ Session Selector */}
+          <select
+            name="session"
+            value={form.session}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          >
+            <option value="">Select Session</option>
+            <option value="Feb-Mar Session">1st Feb - Mar Session</option>
+            <option value="July-Aug Session">2nd July - Aug Session</option>
           </select>
 
           <textarea

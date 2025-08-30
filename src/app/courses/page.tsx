@@ -62,7 +62,7 @@ export default function CoursesPage() {
             <div
               key={course.id}
               className="bg-white rounded-2xl shadow-course-shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden cursor-pointer"
-              onClick={() => router.push("/admissions")} // 👈 redirect on click
+              onClick={() => router.push("/admission")} // 👈 redirect on click
             >
               {/* Image */}
               {course.photo ? (

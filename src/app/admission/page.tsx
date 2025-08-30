@@ -14,10 +14,11 @@ export default function AdmissionsPage() {
     address: "",
     qualification: "",
     course: "",
+    institute: "", // ✅ New field
     message: "",
-    photo: "", // ✅ Student Photo
-    aadhar: "", // ✅ Aadhar Card
-    qualificationDoc: "", // ✅ Last Qualification Document
+    photo: "",
+    aadhar: "",
+    qualificationDoc: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,6 @@ export default function AdmissionsPage() {
     setForm({ ...form, [e.target.name]: e.target.value ?? "" });
   };
 
-  // ✅ reusable function for file uploads
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: "photo" | "aadhar" | "qualificationDoc"
@@ -58,6 +58,7 @@ export default function AdmissionsPage() {
         address: form.address || "",
         qualification: form.qualification.trim(),
         course: form.course || "",
+        institute: form.institute || "", // ✅ included in Firestore
         message: form.message || "",
         photo: form.photo || "",
         aadhar: form.aadhar || "",
@@ -77,6 +78,7 @@ export default function AdmissionsPage() {
         address: "",
         qualification: "",
         course: "",
+        institute: "",
         message: "",
         photo: "",
         aadhar: "",
@@ -104,7 +106,6 @@ export default function AdmissionsPage() {
           learning.
         </p>
       </section>
-
 
       {/* Admission Form */}
       <section className="max-w-4xl mx-auto py-12 px-6">
@@ -192,6 +193,21 @@ export default function AdmissionsPage() {
             <option value="CSS">CSS</option>
             <option value="JavaScript">JavaScript</option>
           </select>
+
+          {/* ✅ Institute Selector */}
+          <select
+            name="institute"
+            value={form.institute}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          >
+            <option value="">Select Institute</option>
+            <option value="Institute A">Institute A</option>
+            <option value="Institute B">Institute B</option>
+            <option value="Institute C">Institute C</option>
+          </select>
+
           <textarea
             name="message"
             placeholder="Your Message"

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import imageCompression from "browser-image-compression"; // ✅ Import compression lib
 
 export default function AdmissionsPage() {
   const [form, setForm] = useState({
@@ -32,16 +33,34 @@ export default function AdmissionsPage() {
     setForm({ ...form, [e.target.name]: e.target.value ?? "" });
   };
 
-  const handleFileChange = (
+  const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
     field: "photo" | "aadhar" | "qualificationDoc"
   ) => {
     if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm((prev) => ({ ...prev, [field]: reader.result as string }));
-      };
-      reader.readAsDataURL(e.target.files[0]);
+      try {
+        const file = e.target.files[0];
+
+        // ✅ Compress the image
+        const options = {
+          maxSizeMB: 0.25, // 250 KB
+          maxWidthOrHeight: 1024, // optional resize
+          useWebWorker: true,
+        };
+
+        const compressedFile =
+          file.type.startsWith("image/")
+            ? await imageCompression(file, options)
+            : file;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setForm((prev) => ({ ...prev, [field]: reader.result as string }));
+        };
+        reader.readAsDataURL(compressedFile);
+      } catch (err) {
+        console.error("Image compression error:", err);
+      }
     }
   };
 
@@ -117,121 +136,161 @@ export default function AdmissionsPage() {
           onSubmit={handleSubmit}
           className="bg-white rounded-2xl shadow-lg p-8 space-y-4 border border-gray-200"
         >
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            value={form.phone}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
-          <input
-            type="date"
-            name="dob"
-            value={form.dob}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
-          <select
-            name="gender"
-            value={form.gender}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          >
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-          <textarea
-            name="address"
-            placeholder="Address"
-            value={form.address}
-            onChange={handleChange}
-            rows={2}
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
-          <input
-            type="text"
-            name="qualification"
-            placeholder="Previous Qualification"
-            value={form.qualification}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
-          <select
-            name="course"
-            value={form.course}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          >
-            <option value="">Select Course</option>
-            <option value="DCA">DCA</option>
-            <option value="O Level">O Level</option>
-            <option value="Python">Python</option>
-            <option value="HTML">HTML</option>
-            <option value="CSS">CSS</option>
-            <option value="JavaScript">JavaScript</option>
-          </select>
+          <div>
+            <label className="block mb-2 font-medium">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number"
+              value={form.phone}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Date of Birth</label>
+            <input
+              type="date"
+              name="dob"
+              value={form.dob}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Gender</label>
+            <select
+              name="gender"
+              value={form.gender}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Address</label>
+            <textarea
+              name="address"
+              placeholder="Address"
+              value={form.address}
+              onChange={handleChange}
+              rows={2}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Previous Qualification</label>
+            <input
+              type="text"
+              name="qualification"
+              placeholder="Previous Qualification"
+              value={form.qualification}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">Course</label>
+            <select
+              name="course"
+              value={form.course}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            >
+              <option value="">Select Course</option>
+              <option value="DCA">DCA</option>
+              <option value="O Level">O Level</option>
+              <option value="Python">Python</option>
+              <option value="HTML">HTML</option>
+              <option value="CSS">CSS</option>
+              <option value="JavaScript">JavaScript</option>
+            </select>
+          </div>
 
           {/* ✅ Institute Selector */}
-          <select
-            name="institute"
-            value={form.institute}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          >
-            <option value="">Select Institute</option>
-            <option value="Institute A">Institute A</option>
-            <option value="Institute B">Institute B</option>
-            <option value="Institute C">Institute C</option>
-          </select>
+          <div>
+            <label className="block mb-2 font-medium">Institute</label>
+            <select
+              name="institute"
+              value={form.institute}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            >
+              <option value="">Select Institute</option>
+              <option value="Institute A">Institute A</option>
+              <option value="Institute B">Institute B</option>
+              <option value="Institute C">Institute C</option>
+            </select>
+          </div>
 
           {/* ✅ Session Selector */}
-          <select
-            name="session"
-            value={form.session}
-            onChange={handleChange}
-            required
-            className="w-full border border-gray-300 rounded-lg p-3"
-          >
-            <option value="">Select Session</option>
-            <option value="Feb-Mar Session">1st Feb - Mar Session</option>
-            <option value="July-Aug Session">2nd July - Aug Session</option>
-          </select>
+          <div>
+            <label className="block mb-2 font-medium">Session</label>
+            <select
+              name="session"
+              value={form.session}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-lg p-3"
+            >
+              <option value="">Select Session</option>
+              <option value="Feb-Mar Session">1st Feb - Mar Session</option>
+              <option value="July-Aug Session">2nd July - Aug Session</option>
+            </select>
+          </div>
 
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            value={form.message}
-            onChange={handleChange}
-            rows={4}
-            className="w-full border border-gray-300 rounded-lg p-3"
-          />
+          <div>
+            <label className="block mb-2 font-medium">Message</label>
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              value={form.message}
+              onChange={handleChange}
+              rows={4}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+          </div>
 
           {/* ✅ Uploads */}
           <div>

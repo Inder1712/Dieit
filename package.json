@@ -13,6 +13,7 @@
     "@iconify/react": "^5.0.1",
     "aos": "^2.3.4",
     "axios": "^1.7.2",
+    "browser-image-compression": "^2.0.2",
     "date-fns": "^3.4.0",
     "firebase": "^12.1.0",
     "framer-motion": "^11.11.9",

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { FaUserGraduate, FaStar, FaRegStar, FaRegClock } from "react-icons/fa";
+import { useRouter } from "next/navigation"; // 👈 import router
 
 interface Course {
   id: string;
@@ -18,11 +19,12 @@ interface Course {
 export default function CoursesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter(); // 👈 initialize router
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "courses")); // 👈 lowercase
+        const querySnapshot = await getDocs(collection(db, "courses")); 
         const courseList: Course[] = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -59,7 +61,8 @@ export default function CoursesPage() {
           {courses.map((course) => (
             <div
               key={course.id}
-              className="bg-white rounded-2xl shadow-course-shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+              className="bg-white rounded-2xl shadow-course-shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden cursor-pointer"
+              onClick={() => router.push("/admissions")} // 👈 redirect on click
             >
               {/* Image */}
               {course.photo ? (
@@ -116,9 +119,9 @@ export default function CoursesPage() {
                 </div>
 
                 {/* Button */}
-                <button className="mt-4 bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors">
+                {/* <button className="mt-4 bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors">
                   Enroll Now
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

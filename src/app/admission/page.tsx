@@ -15,7 +15,9 @@ export default function AdmissionsPage() {
     qualification: "",
     course: "",
     message: "",
-    image: "", // ✅ new field for image
+    photo: "", // ✅ Student Photo
+    aadhar: "", // ✅ Aadhar Card
+    qualificationDoc: "", // ✅ Last Qualification Document
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,15 +30,17 @@ export default function AdmissionsPage() {
     setForm({ ...form, [e.target.name]: e.target.value ?? "" });
   };
 
-  // ✅ convert image to base64 string
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // ✅ reusable function for file uploads
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "photo" | "aadhar" | "qualificationDoc"
+  ) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        setForm({ ...form, image: reader.result as string });
+        setForm((prev) => ({ ...prev, [field]: reader.result as string }));
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
@@ -55,7 +59,9 @@ export default function AdmissionsPage() {
         qualification: form.qualification.trim(),
         course: form.course || "",
         message: form.message || "",
-        image: form.image || "", // ✅ store image as base64 string
+        photo: form.photo || "",
+        aadhar: form.aadhar || "",
+        qualificationDoc: form.qualificationDoc || "",
         createdAt: serverTimestamp(),
       };
 
@@ -72,7 +78,9 @@ export default function AdmissionsPage() {
         qualification: "",
         course: "",
         message: "",
-        image: "",
+        photo: "",
+        aadhar: "",
+        qualificationDoc: "",
       });
     } catch (err: any) {
       console.error("🔥 Firestore addDoc error:", err);
@@ -92,29 +100,11 @@ export default function AdmissionsPage() {
           <span className="font-semibold">
             DCA, O Level, Python, HTML, CSS, JavaScript
           </span>{" "}
-          and more. Build your career with expert guidance and hands-on learning.
+          and more. Build your career with expert guidance and hands-on
+          learning.
         </p>
       </section>
 
-      {/* Admission Process */}
-      <section className="bg-blue-50 py-12 px-6">
-        <h2 className="text-2xl font-bold text-center mb-8">Admission Process</h2>
-        <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
-          {[
-            "Fill the Application Form",
-            "Submit Required Documents",
-            "Pay Fees & Start Classes",
-          ].map((step, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-xl shadow p-6 text-center border border-gray-200"
-            >
-              <div className="text-3xl font-bold text-blue-600 mb-2">{idx + 1}</div>
-              <p className="text-gray-700">{step}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* Admission Form */}
       <section className="max-w-4xl mx-auto py-12 px-6">
@@ -123,19 +113,77 @@ export default function AdmissionsPage() {
           onSubmit={handleSubmit}
           className="bg-white rounded-2xl shadow-lg p-8 space-y-4 border border-gray-200"
         >
-          <input type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3" />
-          <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3" />
-          <input type="tel" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3" />
-          <input type="date" name="dob" value={form.dob} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3" />
-          <select name="gender" value={form.gender} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3">
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            value={form.name}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            value={form.phone}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
+          <input
+            type="date"
+            name="dob"
+            value={form.dob}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
+          <select
+            name="gender"
+            value={form.gender}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
-          <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} rows={2} className="w-full border border-gray-300 rounded-lg p-3" />
-          <input type="text" name="qualification" placeholder="Previous Qualification" value={form.qualification} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3" />
-          <select name="course" value={form.course} onChange={handleChange} required className="w-full border border-gray-300 rounded-lg p-3">
+          <textarea
+            name="address"
+            placeholder="Address"
+            value={form.address}
+            onChange={handleChange}
+            rows={2}
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
+          <input
+            type="text"
+            name="qualification"
+            placeholder="Previous Qualification"
+            value={form.qualification}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
+          <select
+            name="course"
+            value={form.course}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-lg p-3"
+          >
             <option value="">Select Course</option>
             <option value="DCA">DCA</option>
             <option value="O Level">O Level</option>
@@ -144,18 +192,74 @@ export default function AdmissionsPage() {
             <option value="CSS">CSS</option>
             <option value="JavaScript">JavaScript</option>
           </select>
-          <textarea name="message" placeholder="Your Message" value={form.message} onChange={handleChange} rows={4} className="w-full border border-gray-300 rounded-lg p-3" />
+          <textarea
+            name="message"
+            placeholder="Your Message"
+            value={form.message}
+            onChange={handleChange}
+            rows={4}
+            className="w-full border border-gray-300 rounded-lg p-3"
+          />
 
-          {/* ✅ Image Upload */}
+          {/* ✅ Uploads */}
           <div>
             <label className="block mb-2 font-medium">Upload Your Photo</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full border border-gray-300 rounded-lg p-3" />
-            {form.image && (
-              <img src={form.image} alt="Preview" className="mt-4 w-32 h-32 object-cover rounded-lg border" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFileChange(e, "photo")}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+            {form.photo && (
+              <img
+                src={form.photo}
+                alt="Photo Preview"
+                className="mt-4 w-32 h-32 object-cover rounded-lg border"
+              />
             )}
           </div>
 
-          <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50">
+          <div>
+            <label className="block mb-2 font-medium">Upload Aadhar Card</label>
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              onChange={(e) => handleFileChange(e, "aadhar")}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+            {form.aadhar && (
+              <img
+                src={form.aadhar}
+                alt="Aadhar Preview"
+                className="mt-4 w-32 h-32 object-cover rounded-lg border"
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="block mb-2 font-medium">
+              Upload Last Qualification Document
+            </label>
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              onChange={(e) => handleFileChange(e, "qualificationDoc")}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
+            {form.qualificationDoc && (
+              <img
+                src={form.qualificationDoc}
+                alt="Qualification Doc Preview"
+                className="mt-4 w-32 h-32 object-cover rounded-lg border"
+              />
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50"
+          >
             {loading ? "Submitting..." : "Submit Application"}
           </button>
         </form>

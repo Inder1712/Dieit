@@ -31,7 +31,7 @@ const footer = () => {
             <div className="ml-4 font-[6px] underline text">
               DIEIT</div>
             <div className="ml-4   text-[11px] ">
-              (DreamInstitute of Education <br /> and Information Technology)</div>        </div>
+              (Dream Institute of Education <br /> and Information Technology)</div>        </div>
           <div className="col-span-2">
             <h3 className="mb-4 text-2xl font-medium">Links</h3>
             <ul>
@@ -78,9 +78,9 @@ const footer = () => {
             <a href="https://www.youtube.com/" target="_blank" className="flex items-center gap-2">
               <Icon
                 icon="tabler:brand-google-maps"
-                className="text-primary text-3xl inline-block me-2"
+                className="text-primary text-3xl inline-block me-2 h-full"
               />
-              <h5 className="text-lg text-black/60">Paonta Sahib,Himachal Pradesh</h5>
+              <h5 className="text-lg text-black/60">Bagran Road Subhkhera, Tehsil Paonta Sahib, <br /> District Sirmour, Himachal Pradesh – 173025</h5>
             </a>
             <div className="flex gap-2 mt-10">
               <Icon
@@ -94,7 +94,7 @@ const footer = () => {
                 icon="tabler:folder"
                 className="text-primary text-3xl inline-block me-2"
               />
-              <h5 className="text-lg text-black/60">dieitpaonta@gmail.com</h5>
+              <h5 className="text-lg text-black/60">kdsharma@dieit.in</h5>
             </div>
           </div>
         </div>

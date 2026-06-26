@@ -151,7 +151,7 @@ const Hero = () => {
             <h1 className="text-midnight_text text-4xl sm:text-5xl font-semibold pt-5 lg:pt-0">
               Advance your skills with us.
             </h1>
-            <h3 className="text-black/70 text-lg">100+ YEAR OF EXPERIENCE</h3>
+            <h3 className="text-black/70 text-lg">9+ YEAR OF EXPERIENCE</h3>
             <h3 className="text-black/70 text-lg">15+ COURSES</h3>
             <h3 className="text-black/70 text-lg">1000+ STUDENTS</h3>
 

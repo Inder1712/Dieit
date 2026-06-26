@@ -80,7 +80,7 @@ const footer = () => {
                 icon="tabler:brand-google-maps"
                 className="text-primary text-3xl inline-block me-2 h-full"
               />
-              <h5 className="text-lg text-black/60">Bagran Road Subhkhera, Tehsil Paonta Sahib, <br /> District Sirmour, Himachal Pradesh – 173025</h5>
+              <h5 className="text-lg text-black/60">HO:- At Up Sampada Shubhkhera, Paonta Sahib <br /> District Sirmour, Himachal Pradesh – 173025</h5>
             </a>
             <div className="flex gap-2 mt-10">
               <Icon

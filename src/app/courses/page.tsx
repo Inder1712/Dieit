@@ -100,7 +100,7 @@ export default function CoursesPage() {
 
                   {/* Price */}
                   <p className="text-lg font-bold text-secondary mb-3">
-                    ${course.price ?? 0}
+                    Rs.{course.price ?? 0}
                   </p>
 
                   {/* Rating */}

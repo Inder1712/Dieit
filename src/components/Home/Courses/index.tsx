@@ -141,7 +141,7 @@ const Courses = () => {
                       </h3>
                       <div className="flex">{renderStars(course.rating)}</div>
                     </div>
-                    <h3 className="text-3xl font-medium">${course.price}</h3>
+                    <h3 className="text-3xl font-medium">Rs.{course.price}</h3>
                   </div>
                 </div>
               </div>

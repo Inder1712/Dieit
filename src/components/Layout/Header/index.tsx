@@ -1,137 +1,146 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
-import { headerData } from "../Header/Navigation/menuData";
 import Logo from "./Logo";
 import HeaderLink from "../Header/Navigation/HeaderLink";
 import MobileHeaderLink from "../Header/Navigation/MobileHeaderLink";
-import { useTheme } from "next-themes";
+import { headerData } from "../Header/Navigation/menuData";
 
 const Header: React.FC = () => {
-  const pathUrl = usePathname();
-  const { theme, setTheme } = useTheme();
-
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
 
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Sticky header effect
-  const handleScroll = () => setSticky(window.scrollY >= 80);
-
-  // Close menus on outside click
-  const handleClickOutside = (event: MouseEvent) => {
-    if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node) && navbarOpen) {
-      setNavbarOpen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => setSticky(window.scrollY >= 80);
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setNavbarOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [navbarOpen]);
+  }, []);
 
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
-    if (navbarOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = navbarOpen ? "hidden" : "";
   }, [navbarOpen]);
 
   return (
     <header
-      className={`fixed top-0 z-40 w-full transition-all duration-300 bg-white ${
-        sticky ? "shadow-lg py-4" : "shadow-none py-6"
+      className={`fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300 ${
+        sticky ? "shadow-lg" : ""
       }`}
     >
-      <div className="container mx-auto lg:max-w-screen-xl md:max-w-screen-md flex items-center justify-between px-4 relative">
-        <Logo />
+      {/* =================== TOP BAR =================== */}
 
-        {/* Mobile Centered Title */}
-        <div className="lg:hidden absolute left-1/2 transform -translate-x-1/2 text-black font-bold text-center">
-          <div>DIEIT</div>
-          <div className="text-[10px] font-normal">
-            (Dream Institute of Education and Information Technology)
+      <div className="border-b">
+        <div className="container mx-auto lg:max-w-screen-xl px-4 py-3 flex items-center justify-between">
+
+          {/* Logo */}
+          <Logo />
+
+          {/* Institute Name */}
+          <div className="flex-1 text-center px-3">
+            <h2 className="font-bold text-lg md:text-2xl text-black">
+              DIEIT
+            </h2>
+
+            <p className="text-[10px] md:text-sm text-gray-700">
+              Dream Institute of Education and Information Technology
+            </p>
           </div>
-        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex flex-grow items-center gap-8 justify-center">
-          {headerData.map((item, index) => (
-            <HeaderLink key={index} item={item} />
-          ))}
-        </nav>
+          {/* Desktop Button */}
+          <div className="hidden lg:flex">
+            <button
+              onClick={() =>
+                window.open("http://admin.dieit.in", "_blank")
+              }
+              className="bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90"
+            >
+              Admin Login
+            </button>
+          </div>
 
-        {/* Desktop Buttons */}
-        <div className="hidden lg:flex items-center gap-4">
-          <button
-            onClick={() => window.open("http://admin.dieit.in", "_blank")}
-            className="bg-primary text-white hover:bg-primary/15 hover:text-primary px-6 py-3 rounded-full text-lg font-medium"
-          >
-            Admin Login
-          </button>
-
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden">
-          <button
-            onClick={() => setNavbarOpen(!navbarOpen)}
-            className="p-2 rounded-lg bg-gray-200"
-            aria-label="Toggle mobile menu"
-          >
-            <span className="block w-6 h-0.5 bg-black"></span>
-            <span className="block w-6 h-0.5 bg-black mt-1.5"></span>
-            <span className="block w-6 h-0.5 bg-black mt-1.5"></span>
-          </button>
+          {/* Mobile Menu */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setNavbarOpen(!navbarOpen)}
+              className="p-2 rounded-lg bg-gray-200"
+            >
+              <span className="block w-6 h-0.5 bg-black"></span>
+              <span className="block w-6 h-0.5 bg-black mt-1.5"></span>
+              <span className="block w-6 h-0.5 bg-black mt-1.5"></span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Slide-out Menu */}
+      {/* =================== NAVIGATION =================== */}
+
+      <div className="hidden lg:block bg-white">
+        <div className="container mx-auto lg:max-w-screen-xl px-4">
+          <nav className="flex justify-center gap-8 py-4">
+            {headerData.map((item, index) => (
+              <HeaderLink key={index} item={item} />
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* =================== MOBILE MENU =================== */}
+
       <div
         ref={mobileMenuRef}
-        className={`lg:hidden fixed top-0 right-0 h-full w-full bg-white shadow-lg transform transition-transform duration-300 max-w-xs ${
+        className={`lg:hidden fixed top-0 right-0 h-full w-80 bg-white shadow-xl transition-transform duration-300 ${
           navbarOpen ? "translate-x-0" : "translate-x-full"
-        } z-50`}
+        }`}
       >
-        <div className="flex items-center justify-between p-4 bg-white">
+        <div className="flex justify-between items-center p-4 border-b">
           <Logo />
+
           <button
             onClick={() => setNavbarOpen(false)}
-            className="w-6 h-6 text-black"
-            aria-label="Close menu"
+            className="text-2xl"
           >
             ✕
           </button>
         </div>
-        <nav className="flex flex-col items-start p-4 gap-4">
-          {headerData.map((item, index) => (
-            <MobileHeaderLink
-              key={index}
-              item={item}
-              onClick={() => setNavbarOpen(false)}
-            />
-          ))}
-          <div className="mt-4 flex flex-col space-y-4 w-full">
-            <button
-              onClick={() => {
-                window.open("http://admin.dieit.in", "_blank");
-                setNavbarOpen(false);
-              }}
-              className="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white"
-            >
-              Admin Login
-            </button>
-            
-          </div>
-        </nav>
+
+        <div className="p-4">
+
+          <button
+            onClick={() => {
+              window.open("http://admin.dieit.in", "_blank");
+              setNavbarOpen(false);
+            }}
+            className="w-full bg-primary text-white py-3 rounded-lg mb-6"
+          >
+            Admin Login
+          </button>
+
+          <nav className="flex flex-col gap-4">
+            {headerData.map((item, index) => (
+              <MobileHeaderLink
+                key={index}
+                item={item}
+                onClick={() => setNavbarOpen(false)}
+              />
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );

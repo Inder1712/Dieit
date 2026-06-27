@@ -49,7 +49,7 @@ export default function CoursesPage() {
   }
 
   return (
-    <div className="px-6 py-12 bg-slateGray min-h-screen">
+    <div className="px-6 py-12 bg-slateGray min-h-screen mt-12">
       <h1 className="text-4xl font-bold text-primary mb-10 text-center">
         Our Courses
       </h1>
@@ -78,7 +78,7 @@ export default function CoursesPage() {
               )}
 
               {/* Content */}
-              <div className="p-6 flex flex-col justify-between h-full mt-12">
+              <div className="p-6 flex flex-col justify-between h-full">
                 <div>
                   <h3 className="text-lg font-semibold text-midnight_text">
                     {course.heading}

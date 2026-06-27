@@ -78,7 +78,7 @@ export default function CoursesPage() {
               )}
 
               {/* Content */}
-              <div className="p-6 flex flex-col justify-between h-full">
+              <div className="p-6 flex flex-col justify-between h-full mt-12">
                 <div>
                   <h3 className="text-lg font-semibold text-midnight_text">
                     {course.heading}

@@ -16,7 +16,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen mt-12">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white pt-28 pb-16 px-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
@@ -36,11 +36,12 @@ export default function ContactPage() {
           <ul className="space-y-5 text-gray-700 text-lg">
             <li>
               <strong>Address:</strong><br />
-              DIEIT Institute, Near Shamsherpur, NH-72, Paonta Sahib, Himachal Pradesh, India
+              HO:- At Up Sampada Shubhkhera, Paonta Sahib
+District Sirmour, Himachal Pradesh – 173025
             </li>
             <li>
               <strong>Phone:</strong><br />
-              +91-XXXXXXXXXX
+              01704 292508
             </li>
             <li>
               <strong>Email:</strong><br />
@@ -49,7 +50,7 @@ export default function ContactPage() {
             <li>
               <strong>Google Maps:</strong><br />
               <a
-                href="https://goo.gl/maps/ZcCZKw27NnEyB6eT6"
+                href="https://maps.app.goo.gl/mQoyPvYsM98crk24A?g_st=ic"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:underline"

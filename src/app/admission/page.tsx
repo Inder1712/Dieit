@@ -115,7 +115,7 @@ export default function AdmissionsPage() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-slate-50 min-h-screen mt-12">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white pt-28 pb-16 px-6 text-center">
         <h1 className="text-4xl font-bold mb-4">Admissions Open</h1>

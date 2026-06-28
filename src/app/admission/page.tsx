@@ -336,8 +336,8 @@ const payload = {
               className="w-full border border-gray-300 rounded-lg p-3"
             >
               <option value="">Select Session</option>
-              <option value="Feb-Mar Session">1st Feb - Mar Session</option>
-              <option value="July-Aug Session">2nd July - Aug Session</option>
+              <option value="January-December">January-December Session</option>
+              <option value="June-July">June-July Session</option>
             </select>
           </div>
 

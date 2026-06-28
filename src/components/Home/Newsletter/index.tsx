@@ -3,9 +3,9 @@ import Image from "next/image";
 
 const Newsletter = () => {
   const institutes = [
-    { name: "Institute 1", img: "images/banner/Instutue.jpeg" },
-    { name: "Institute 2", img: "images/banner/Instutue.jpeg" },
-    { name: "Institute 3", img: "images/banner/Instutue.jpeg" },
+    { name: "Institute 1", img: "images/banner/institue6.jpeg" },
+    { name: "Institute 2", img: "images/banner/institue1.jpeg" },
+    { name: "Institute 3", img: "images/banner/institue5.jpeg" },
   ];
 
   return (

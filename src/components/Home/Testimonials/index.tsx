@@ -66,7 +66,7 @@ const Testimonial = () => {
 
     return (
         <section id="testimonial">
-            <div className='container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4'>
+            {/* <div className='container mx-auto lg:max-w-screen-xl md:max-w-screen-md px-4'>
                 <Slider {...settings}>
                     {TestimonialData.map((items, i) => (
                         <div key={i}>
@@ -89,7 +89,7 @@ const Testimonial = () => {
                         </div>
                     ))}
                 </Slider>
-            </div>
+            </div> */}
         </section>
     );
 };

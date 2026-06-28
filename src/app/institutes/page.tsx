@@ -1,89 +1,209 @@
-// src/app/institutes/page.tsx
+"use client";
+
 import Image from "next/image";
-
-interface Institute {
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  image: string;
-}
-
-const institutes: Institute[] = [
-  {
-    name: "Downtown Learning Center",
-    address: "123 Main Street, City Center, New Delhi, India",
-    phone: "+91 98765 43210",
-    email: "downtown@institute.com",
-    image: "/images/institutes/institue1.jpeg",
-  },
-  {
-    name: "North Campus Center",
-    address: "45 Knowledge Avenue, North Campus, Delhi, India",
-    phone: "+91 91234 56789",
-    email: "north@institute.com",
-    image: "/images/institutes/institue1.jpeg",
-  },
-  {
-    name: "West End Training Center",
-    address: "78 Edu Park Road, West Delhi, India",
-    phone: "+91 99887 77665",
-    email: "west@institute.com",
-    image: "/images/institutes/institue1.jpeg",
-  },
-];
+import { useEffect, useState } from "react";
 
 export default function InstitutesPage() {
-  return (
-    <section className="bg-slateGray min-h-screen py-16 px-4">
-      <div className="container mx-auto lg:max-w-screen-xl">
-        <h1 className="text-3xl md:text-4xl font-bold text-midnight_text text-center mb-12">
-          Our Institute Centers
-        </h1>
+  const images = [
+    "/images/institutes/institue1.jpeg",
+    "/images/institutes/institue2.jpeg",
+    "/images/institutes/institue3.jpeg",
+    "/images/institutes/institue4.jpeg",
+    "/images/institutes/institue5.jpeg",
+    "/images/institutes/institue6.jpeg",
+  ];
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {institutes.map((institute, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl shadow-course-shadow hover:shadow-testimonial-shadow2 transition-shadow duration-300"
-            >
-              <div className="relative w-fit rounded-t-2xl overflow-hidden">
-                <img
-                  src={institute.image}
-                  alt={institute.name}
-                  
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h2 className="text-xl font-semibold text-primary mb-2">
-                  {institute.name}
-                </h2>
-                <p className="text-grey mb-3">{institute.address}</p>
-                <div className="text-sm text-midnight_text space-y-1">
-                  <p>
-                    <strong>Phone:</strong>{" "}
-                    <a
-                      href={`tel:${institute.phone}`}
-                      className="text-secondary hover:underline"
-                    >
-                      {institute.phone}
-                    </a>
-                  </p>
-                  <p>
-                    <strong>Email:</strong>{" "}
-                    <a
-                      href={`mailto:${institute.email}`}
-                      className="text-secondary hover:underline"
-                    >
-                      {institute.email}
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  const nextImage = () => {
+    setCurrentImage((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  return (
+    <section className="bg-gray-50 min-h-screen pt-32 mt-12 pb-20 px-4">
+      <div className="container mx-auto max-w-7xl">
+        {/* Heading */}
+        <div className="text-center mb-14">
+          <h1 className="text-4xl md:text-5xl font-bold text-blue-700">
+            Dream Institute of Education & Information Technology
+          </h1>
+
+          <p className="mt-5 text-lg text-gray-600 max-w-4xl mx-auto">
+            Empowering students through quality education, vocational training,
+            skill development, and innovation.
+          </p>
         </div>
+
+        {/* Main Card */}
+        {/* Main Card */}
+<div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+
+  {/* Image Slider */}
+  <div className="relative w-full h-[300px] md:h-[500px] lg:h-[650px] overflow-hidden">
+    {images.map((image, index) => (
+      <Image
+        key={index}
+        src={image}
+        alt={`Institute ${index + 1}`}
+        fill
+        priority={index === 0}
+        className={`absolute inset-0 object-cover transition-opacity duration-1000 ${
+          index === currentImage ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    ))}
+
+    {/* Overlay */}
+    <div className="absolute inset-0 bg-black/20"></div>
+
+    {/* Previous */}
+    <button
+      onClick={prevImage}
+      className="absolute left-5 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center text-2xl shadow-lg transition"
+    >
+      ❮
+    </button>
+
+    {/* Next */}
+    <button
+      onClick={nextImage}
+      className="absolute right-5 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center text-2xl shadow-lg transition"
+    >
+      ❯
+    </button>
+
+    {/* Counter */}
+    <div className="absolute top-5 right-5 bg-white/90 px-4 py-2 rounded-full font-semibold shadow">
+      {currentImage + 1} / {images.length}
+    </div>
+
+    {/* Dots */}
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+      {images.map((_, index) => (
+        <button
+          key={index}
+          onClick={() => setCurrentImage(index)}
+          className={`transition-all duration-300 rounded-full ${
+            currentImage === index
+              ? "w-8 h-3 bg-white"
+              : "w-3 h-3 bg-white/60 hover:bg-white"
+          }`}
+        />
+      ))}
+    </div>
+  </div>
+
+  {/* Content */}
+  <div className="max-w-5xl mx-auto px-8 py-12">
+
+    <h2 className="text-4xl font-bold text-blue-700 mb-8 text-center">
+      About DIEIT
+    </h2>
+
+    <div className="space-y-6 text-gray-700 leading-8 text-justify text-lg">
+      <p>
+        Dream Institute of Education and Information Technology (DIEIT),
+        situated at Up Sampada, Shubhkhera, Paonta Sahib, District Sirmaur,
+        Himachal Pradesh – 173025, is a professional institution dedicated to
+        providing quality technical, vocational and skill-based education.
+      </p>
+
+      <p>
+        Registered under the Himachal Pradesh Society Registration Act 2006,
+        DIEIT was established by experienced academicians and professionals
+        committed to excellence in education, ethics and innovation.
+      </p>
+
+      <p>
+        The institute has earned the trust of students and parents through its
+        educational and charitable initiatives. It offers programmes in
+        Computer Science, Information Technology, Health and Skill Development
+        with a strong focus on practical learning.
+      </p>
+
+      <p>
+        One of the institute's major achievements is the establishment of one
+        of the largest Skill Development Centres (SDC) in Himachal Pradesh,
+        aligned with the Skill India Mission. Students receive industry-based
+        training using modern technologies, making them job-ready
+        professionals.
+      </p>
+
+      <p>
+        Today, students from Himachal Pradesh, Punjab, Haryana, Chandigarh,
+        Uttar Pradesh and Uttarakhand choose DIEIT for its quality education
+        and career-oriented learning environment.
+      </p>
+    </div>
+
+    {/* Information Card */}
+    <div className="mt-14 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 shadow-lg border">
+
+      <h3 className="text-3xl font-bold text-blue-700 mb-8 text-center">
+        Institute Information
+      </h3>
+
+      <div className="grid md:grid-cols-2 gap-8">
+
+        <div>
+          <h4 className="font-semibold text-xl mb-2">📍 Address</h4>
+          <p className="text-gray-700 leading-7">
+            Up Sampada, Shubhkhera
+            <br />
+            Paonta Sahib
+            <br />
+            District Sirmaur
+            <br />
+            Himachal Pradesh – 173025
+          </p>
+        </div>
+
+        <div>
+          <h4 className="font-semibold text-xl mb-2">👨‍💼 Chairman</h4>
+          <p className="text-gray-700">
+            Sh. Vineet Kumar
+          </p>
+        </div>
+
+        <div>
+          <h4 className="font-semibold text-xl mb-2">📞 Phone</h4>
+          <a
+            href="tel:+919876543210"
+            className="text-blue-700 hover:underline"
+          >
+            +91 98765 43210
+          </a>
+        </div>
+
+        <div>
+          <h4 className="font-semibold text-xl mb-2">✉️ Email</h4>
+          <a
+            href="mailto:info@dieit.in"
+            className="text-blue-700 hover:underline"
+          >
+            info@dieit.in
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
       </div>
     </section>
   );

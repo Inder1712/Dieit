@@ -52,15 +52,23 @@ const Header: React.FC = () => {
           <Logo />
 
           {/* Institute Name */}
-          <div className="flex-1 text-center px-3">
-            <h2 className="font-bold text-lg md:text-2xl text-black">
-              DIEIT
-            </h2>
-
-            <p className="text-[10px] md:text-sm text-gray-700">
-              Dream Institute of Education and Information Technology
-            </p>
-          </div>
+         <div className="flex items-center flex-1 justify-center">
+  <h1
+    className="
+      text-lg
+      md:text-2xl
+      lg:text-3xl
+      font-bold
+      text-black
+      font-serif
+      tracking-tight
+      leading-tight
+      text-center
+    "
+  >
+    Dream Institute of Education and Information Technology
+  </h1>
+</div>
 
           {/* Desktop Button */}
           <div className="hidden lg:flex">

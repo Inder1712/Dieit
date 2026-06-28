@@ -108,74 +108,80 @@ export const courseData: {
     },
   ]
 
-export const MentorData: { profession: string; name: string; imgSrc: string }[] = [
+export const MentorData: {
+  profession: string;
+  name: string;
+  imgSrc: string;
+}[] = [
+
   {
-    profession: 'Director',
-    name: 'Mr. KD Sharma',
-    imgSrc: '/images/mentor/user3.png',
+    profession: "Director cum HOD",
+    name: "K.D. Sharma",
+    imgSrc: "/images/mentor/user3.png",
+  },
+     {
+    profession: "President",
+    name: "Vineet Kumar",
+    imgSrc: "/images/mentor/image.png",
   },
   {
-    profession: 'Employe',
-    name: 'Sushil Sharma',
-    imgSrc: '/images/mentor/user1.png',
+    profession: "Secretary",
+    name: "Sushil Sharma",
+    imgSrc: "/images/mentor/fake.png",
   },
   {
-    profession: 'Senior UX Designer',
-    name: 'Shoo Thar Mien',
-    imgSrc: '/images/mentor/user1.png',
+    profession: "Treasurer",
+    name: "Santosh Kumari",
+    imgSrc: "/images/mentor/fake.png",
   },
   {
-    profession: 'Senior UX Designer',
-    name: 'Shoo Thar Mien',
-    imgSrc: '/images/mentor/user3.png',
+    profession: "Assistant Director (Admin)",
+    name: "Baldev Thakur",
+    imgSrc: "/images/mentor/fake.png",
   },
-  {
-    profession: 'Senior UX Designer',
-    name: 'Shoo Thar Mien',
-    imgSrc: '/images/mentor/user1.png',
+    {
+    profession: "President",
+    name: "Vineet Kumar",
+    imgSrc: "/images/mentor/image.png",
   },
-  {
-    profession: 'Senior UX Designer',
-    name: 'Shoo Thar Mien',
-    imgSrc: '/images/mentor/user1.png',
-  },
-]
+];
 
 export const TestimonialData: { profession: string; comment: string; imgSrc: string; name: string; rating: number; }[] = [
  
   {
-    name: "Leslie Alexander",
-    profession: 'CEO, Parkview Int.Ltd',
+    name: "Vinnet Kumar",
+    profession: 'President',
     comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    imgSrc: '/images/mentor/user1.png',
-    rating: 5
+    imgSrc: '/images/mentor/image.png',
+    rating: 0
   },
   {
-    name: "Cody Fisher",
-    profession: 'CEO, Parkview Int.Ltd',
+    name: "K.D Sharma",
+    profession: 'Director cum HOD all over',
     comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
     imgSrc: '/images/mentor/user3.png',
-    rating: 5
+    rating: 0
   },
   {
-    name: "Robert Fox",
-    profession: 'CEO, Parkview Int.Ltd',
+    name: "Sushil Sharma",
+    profession: 'Secretary',
     comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    imgSrc: '/images/mentor/user1.png',
-    rating: 5
+    imgSrc: '/images/mentor/fake.png',
+    rating: 0
   },
   {
-    name: "Leslie Alexander",
-    profession: 'CEO, Parkview Int.Ltd',
+    name: "Santosh Kumari",
+    profession: 'Treasurer ',
     comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    imgSrc: '/images/mentor/user1.png',
-    rating: 5
+    imgSrc: '/images/mentor/fake.png',
+    rating: 0
   },
+  
   {
-    name: "Cody Fisher",
-    profession: 'CEO, Parkview Int.Ltd',
+    name: "Baldev Thakur",
+    profession: 'Assistant Director (Admin)',
     comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    imgSrc: '/images/mentor/user3.png',
-    rating: 5
+    imgSrc: '/images/mentor/fake.png',
+    rating: 0
   },
 ]

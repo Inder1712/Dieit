@@ -6,22 +6,25 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import imageCompression from "browser-image-compression"; // ✅ Import compression lib
 
 export default function AdmissionsPage() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    dob: "",
-    gender: "",
-    address: "",
-    qualification: "",
-    course: "",
-    institute: "",
-    session: "", // ✅ New field
-    message: "",
-    photo: "",
-    aadhar: "",
-    qualificationDoc: "",
-  });
+const [form, setForm] = useState({
+  name: "",
+  relation: "",       // NEW (S/o, D/o, W/o)
+  guardianName: "",   // NEW
+  admissionDate: "",  // NEW
+  email: "",
+  phone: "",
+  dob: "",
+  gender: "",
+  address: "",
+  qualification: "",
+  course: "",
+  institute: "",
+  session: "",
+  message: "",
+  photo: "",
+  aadhar: "",
+  qualificationDoc: "",
+});
 
   const [loading, setLoading] = useState(false);
 
@@ -69,8 +72,11 @@ export default function AdmissionsPage() {
     setLoading(true);
 
     try {
-      const payload = {
-        name: form.name.trim(),
+const payload = {
+    name: form.name.trim(),
+    relation: form.relation,
+    guardianName: form.guardianName.trim(),
+    admissionDate: form.admissionDate,
         email: form.email.trim(),
         phone: form.phone.trim(),
         dob: form.dob || "",
@@ -90,22 +96,25 @@ export default function AdmissionsPage() {
       await addDoc(collection(db, "Admissions"), payload);
 
       alert("✅ Application submitted successfully!");
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        dob: "",
-        gender: "",
-        address: "",
-        qualification: "",
-        course: "",
-        institute: "",
-        session: "",
-        message: "",
-        photo: "",
-        aadhar: "",
-        qualificationDoc: "",
-      });
+  setForm({
+  name: "",
+  relation: "",
+  guardianName: "",
+  admissionDate: "",
+  email: "",
+  phone: "",
+  dob: "",
+  gender: "",
+  address: "",
+  qualification: "",
+  course: "",
+  institute: "",
+  session: "",
+  message: "",
+  photo: "",
+  aadhar: "",
+  qualificationDoc: "",
+});
     } catch (err: any) {
       console.error("🔥 Firestore addDoc error:", err);
       alert(`❌ Failed to submit. ${err.message || err.code}`);
@@ -148,6 +157,58 @@ export default function AdmissionsPage() {
               className="w-full border border-gray-300 rounded-lg p-3"
             />
           </div>
+          {/* Relation */}
+<div>
+  <label className="block mb-2 font-medium">
+    S/o, D/o or W/o
+  </label>
+
+  <select
+    name="relation"
+    value={form.relation}
+    onChange={handleChange}
+    required
+    className="w-full border border-gray-300 rounded-lg p-3"
+  >
+    <option value="">Select</option>
+    <option value="S/o">S/o</option>
+    <option value="D/o">D/o</option>
+    <option value="W/o">W/o</option>
+  </select>
+</div>
+
+{/* Guardian Name */}
+<div>
+  <label className="block mb-2 font-medium">
+    Father's / Husband's Name
+  </label>
+
+  <input
+    type="text"
+    name="guardianName"
+    value={form.guardianName}
+    onChange={handleChange}
+    placeholder="Enter Name"
+    required
+    className="w-full border border-gray-300 rounded-lg p-3"
+  />
+</div>
+
+{/* Admission Date */}
+<div>
+  <label className="block mb-2 font-medium">
+    Admission Date
+  </label>
+
+  <input
+    type="date"
+    name="admissionDate"
+    value={form.admissionDate}
+    onChange={handleChange}
+    required
+    className="w-full border border-gray-300 rounded-lg p-3"
+  />
+</div>
 
           <div>
             <label className="block mb-2 font-medium">Email</label>

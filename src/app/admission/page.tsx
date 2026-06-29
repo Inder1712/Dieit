@@ -329,9 +329,9 @@ sessionEnd: "",
               className="w-full border border-gray-300 rounded-lg p-3"
             >
               <option value="">Select Institute</option>
-              <option value="Institute A">DIEIT SHILLAI</option>
-              <option value="Institute B">DIEIT SANGRAH</option>
-              <option value="Institute C">DIEIT PAONTA</option>
+              <option value="Institute SHILLAI">DIEIT SHILLAI</option>
+              <option value="Institute DIEIT">DIEIT SANGRAH</option>
+              <option value="Institute PAONTA">DIEIT PAONTA</option>
             </select>
           </div>
 

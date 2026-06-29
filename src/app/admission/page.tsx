@@ -337,7 +337,7 @@ const payload = {
       <input
         type="date"
         name="sessionStart"
-        value={form.sessionStart}
+        // value={form.sessionStart}
         onChange={handleChange}
         required
         className="w-full border border-gray-300 rounded-lg p-3"
@@ -351,7 +351,7 @@ const payload = {
       <input
         type="date"
         name="sessionEnd"
-        value={form.sessionEnd}
+        // value={form.sessionEnd}
         onChange={handleChange}
         required
         className="w-full border border-gray-300 rounded-lg p-3"

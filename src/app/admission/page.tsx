@@ -330,7 +330,7 @@ sessionEnd: "",
             >
               <option value="">Select Institute</option>
               <option value="Institute SHILLAI">DIEIT SHILLAI</option>
-              <option value="Institute DIEIT">DIEIT SANGRAH</option>
+              <option value="Institute SANGRAH">DIEIT SANGRAH</option>
               <option value="Institute PAONTA">DIEIT PAONTA</option>
             </select>
           </div>

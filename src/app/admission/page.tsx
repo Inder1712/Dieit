@@ -8,9 +8,9 @@ import imageCompression from "browser-image-compression"; // ✅ Import compress
 export default function AdmissionsPage() {
 const [form, setForm] = useState({
   name: "",
-  relation: "",       // NEW (S/o, D/o, W/o)
-  guardianName: "",   // NEW
-  admissionDate: "",  // NEW
+  relation: "",
+  guardianName: "",
+  admissionDate: "",
   email: "",
   phone: "",
   dob: "",
@@ -19,7 +19,12 @@ const [form, setForm] = useState({
   qualification: "",
   course: "",
   institute: "",
+
   session: "",
+
+  sessionStart: "",   // ✅ NEW
+  sessionEnd: "",     // ✅ NEW
+
   message: "",
   photo: "",
   aadhar: "",
@@ -72,6 +77,8 @@ const [form, setForm] = useState({
     setLoading(true);
 
     try {
+      const session =
+  `${form.sessionStart} to ${form.sessionEnd}`;
 const payload = {
     name: form.name.trim(),
     relation: form.relation,
@@ -85,7 +92,7 @@ const payload = {
         qualification: form.qualification.trim(),
         course: form.course || "",
         institute: form.institute || "",
-        session: form.session || "", // ✅ included in Firestore
+        session, // ✅ included in Firestore
         message: form.message || "",
         photo: form.photo || "",
         aadhar: form.aadhar || "",
@@ -97,6 +104,8 @@ const payload = {
 
       alert("✅ Application submitted successfully!");
   setForm({
+    sessionStart: "",
+sessionEnd: "",
   name: "",
   relation: "",
   guardianName: "",
@@ -335,27 +344,27 @@ const payload = {
         From (Start Date)
       </label>
       <input
-        type="date"
-        name="sessionStart"
-        // value={form.sessionStart}
-        onChange={handleChange}
-        required
-        className="w-full border border-gray-300 rounded-lg p-3"
-      />
+  type="date"
+  name="sessionStart"
+  value={form.sessionStart}
+  onChange={handleChange}
+  required
+  className="w-full border border-gray-300 rounded-lg p-3"
+/>
     </div>
 
     <div>
       <label className="block text-sm text-gray-600 mb-1">
         To (End Date)
       </label>
-      <input
-        type="date"
-        name="sessionEnd"
-        // value={form.sessionEnd}
-        onChange={handleChange}
-        required
-        className="w-full border border-gray-300 rounded-lg p-3"
-      />
+     <input
+  type="date"
+  name="sessionEnd"
+  value={form.sessionEnd}
+  onChange={handleChange}
+  required
+  className="w-full border border-gray-300 rounded-lg p-3"
+/>
     </div>
   </div>
 </div>

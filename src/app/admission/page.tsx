@@ -99,6 +99,7 @@ const payload = {
         qualificationDoc: form.qualificationDoc || "",
         createdAt: serverTimestamp(),
       };
+      console.log("Payload:", payload);
 
       await addDoc(collection(db, "Admissions"), payload);
 

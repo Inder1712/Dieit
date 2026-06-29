@@ -132,7 +132,7 @@ export default function ContactPage() {
                 Himachal Pradesh - 173023
               </p>
 
-              <p className="mt-4">📞 01704-292508</p>
+              <p className="mt-4">📞 9459532941</p>
               <p>📧 dieitinstitute00000@gmail.com</p>
             </div>
 

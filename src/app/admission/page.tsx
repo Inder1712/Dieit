@@ -131,7 +131,7 @@ const payload = {
         <p className="max-w-2xl mx-auto text-lg">
           Enroll now in our industry-relevant programs like{" "}
           <span className="font-semibold">
-            DCA, O Level, Python, HTML, CSS, JavaScript
+            DCA, O Level, PGDCA, HTML, CSS, JavaScript
           </span>{" "}
           and more. Build your career with expert guidance and hands-on
           learning.
@@ -301,7 +301,7 @@ const payload = {
               <option value="">Select Course</option>
               <option value="DCA">DCA</option>
               <option value="O Level">O Level</option>
-              <option value="Python">Python</option>
+              <option value="PGDCA">PGDCA</option>
               <option value="HTML">HTML</option>
               <option value="CSS">CSS</option>
               <option value="JavaScript">JavaScript</option>
@@ -319,27 +319,46 @@ const payload = {
               className="w-full border border-gray-300 rounded-lg p-3"
             >
               <option value="">Select Institute</option>
-              <option value="Institute A">Institute A</option>
-              <option value="Institute B">Institute B</option>
-              <option value="Institute C">Institute C</option>
+              <option value="Institute A">DIEIT SHILLAI</option>
+              <option value="Institute B">DIEIT SANGRAH</option>
+              <option value="Institute C">DIEIT PAONTA</option>
             </select>
           </div>
 
           {/* ✅ Session Selector */}
-          <div>
-            <label className="block mb-2 font-medium">Session</label>
-            <select
-              name="session"
-              value={form.session}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg p-3"
-            >
-              <option value="">Select Session</option>
-              <option value="January-December">January-December Session</option>
-              <option value="June-July">June-July Session</option>
-            </select>
-          </div>
+    <div>
+  <label className="block mb-2 font-medium">Session</label>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label className="block text-sm text-gray-600 mb-1">
+        From (Start Date)
+      </label>
+      <input
+        type="date"
+        name="sessionStart"
+        value={form.sessionStart}
+        onChange={handleChange}
+        required
+        className="w-full border border-gray-300 rounded-lg p-3"
+      />
+    </div>
+
+    <div>
+      <label className="block text-sm text-gray-600 mb-1">
+        To (End Date)
+      </label>
+      <input
+        type="date"
+        name="sessionEnd"
+        value={form.sessionEnd}
+        onChange={handleChange}
+        required
+        className="w-full border border-gray-300 rounded-lg p-3"
+      />
+    </div>
+  </div>
+</div>
 
           <div>
             <label className="block mb-2 font-medium">Message</label>
